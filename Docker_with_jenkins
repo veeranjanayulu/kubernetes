@@ -1,0 +1,6 @@
+#Add Jenkins to the Docker group:
+sudo usermod -aG docker jenkins
+#Restart Jenkins for the changes to take effect:
+sudo systemctl restart jenkins
+#Restart Docker as well (optional but recommended):
+sudo systemctl restart docker
