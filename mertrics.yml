@@ -10,3 +10,7 @@ kubectl run  httpd --image=httpd:latest
 
 kubectl scale  --replicas=4  rs/httpd
 
+kubectl taint node <node-name>  gpu=true:NoSchedule
+
+kubectl label node <node-name> gpu=true
+
