@@ -6,3 +6,11 @@ kubectl config set-context sonu-context --cluster=iam-root-account@naresh.ap-sou
 k config get-contexts
 
  kubectl config use-context sonu-context
+
+ k create role hemanth --verb=get,list,watch --resource=node
+
+ k create rolebinding hemanth-bind  --role=hemanth --user=hemanth
+
+ k create clusterrole hemanth --verb=get,list,watch --resource=node
+ 
+  kubectl create clusterrolebinding hemanth-bind   --clusterrole=hemanth   --user=hemanth
