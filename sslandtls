@@ -1,0 +1,7 @@
+ openssl genrsa -out sonu.key 2048
+
+  openssl req -new -key sonu.key -out sonu.csr -subj "//CN=sonu"
+
+  cat sonu.csr | base64 | tr --d "\n"
+
+   k certificate approve sonu
