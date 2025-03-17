@@ -1,0 +1,8 @@
+kubectl config set-credentials sonu   --client-key=sonu.key   --client-certificate=certificate.crt   --embed-certs=true
+
+
+kubectl config set-context sonu-context --cluster=iam-root-account@naresh.ap-south-1.eksctl.io --user=sonu
+
+k config get-contexts
+
+ kubectl config use-context sonu-context
