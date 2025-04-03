@@ -1,0 +1,3 @@
+Download the file - scp -i .\ali.pem ec2-user@ec2-52-66-245-151.ap-south-1.compute.amazonaws.com:hemanths\file C:\Users\lenovo\OneDrive\Desktop\terraform
+
+Upload the file from the local - scp -i .\ali.pem .\file ec2-user@ec2-52-66-245-151.ap-south-1.compute.amazonaws.com:hemanths 
