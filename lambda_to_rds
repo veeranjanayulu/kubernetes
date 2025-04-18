@@ -1,0 +1,62 @@
+import pymysql
+import os
+
+# RDS connection details from environment variables
+DB_HOST = os.environ['DB_HOST']     # e.g., database-1.xxxxxx.us-east-1.rds.amazonaws.com
+DB_USER = os.environ['DB_USER']     # e.g., admin
+DB_PASSWORD = os.environ['DB_PASSWORD']  # Your RDS master password
+
+# Name of the new database you want to create
+NEW_DB_NAME = "mydb"
+
+def lambda_handler(event, context):
+    try:
+        # Connect to RDS (no DB yet)
+        connection = pymysql.connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            cursorclass=pymysql.cursors.DictCursor
+        )
+
+        # Create the new database if it doesn't exist
+        with connection.cursor() as cursor:
+            cursor.execute(f"CREATE DATABASE IF NOT EXISTS {NEW_DB_NAME}")
+        
+        # Switch to the new database
+        connection.select_db(NEW_DB_NAME)
+
+        # Create the users table if it doesn't exist
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    username VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL
+                )
+            """)
+
+        # Insert some sample records into the users table
+        sample_users = [
+            ('john_doe', 'john.doe@example.com'),
+            ('jane_smith', 'jane.smith@example.com'),
+            ('alex_jones', 'alex.jones@example.com')
+        ]
+
+        with connection.cursor() as cursor:
+            query = "INSERT INTO users (username, email) VALUES (%s, %s)"
+            cursor.executemany(query, sample_users)
+            connection.commit()
+
+        connection.close()
+
+        return {
+            'statusCode': 200,
+            'body': f"Database '{NEW_DB_NAME}' created and records inserted successfully."
+        }
+
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': f"Error: {str(e)}"
+        }
