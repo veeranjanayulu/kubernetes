@@ -1,0 +1,5 @@
+py -m venv pymysql
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+.\pymysql\Scripts\Activate.ps1
