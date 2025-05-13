@@ -14,3 +14,7 @@ kubectl taint node <node-name>  gpu=true:NoSchedule
 
 kubectl label node <node-name> gpu=true
 
+
+#command for the port export
+kubectl port-forward service/http 8080:80 & disown 
+
