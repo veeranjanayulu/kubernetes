@@ -18,3 +18,5 @@ kubectl label node <node-name> gpu=true
 #command for the port export
 kubectl port-forward service/http 8080:80 & disown 
 
+#command for the history of node 
+kubectl get nodes -o wide
